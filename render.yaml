@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: staging-graphql-gitconnected
+    plan: starter
+    env: docker
+    region: oregon
+    autoDeploy: false
+    healthCheckPath: /healthz
+    envVars:
+      - key: HASURA_GRAPHQL_DATABASE_URL
+        fromDatabase:
+          name: staging-db-gitconnected
+          property: connectionString
+      - key: HASURA_GRAPHQL_ENABLE_CONSOLE
+        value: true
+      - key: HASURA_GRAPHQL_UNAUTHORIZED_ROLE
+        value: anonymous
+databases:
+  - name: staging-db-gitconnected
+    postgresMajorVersion: 16
+    region: oregon
